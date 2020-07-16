@@ -25,14 +25,6 @@ public class CriticalPathEvaluator {
         
     }
 
-    public static CriticalPathEvaluator create(
-        String et,
-        String cp) {
-  
-        return new CriticalPathEvaluator(Float.parseFloat(et), cp);
-    }
-
-
     public static CriticalPathEvaluator createFromJsonReader(JsonReader jsonReader) throws IOException {
         JsonToken nextToken = jsonReader.peek();
         jsonReader.beginObject(); // "BEGIN_OBJECT"
@@ -75,7 +67,7 @@ public class CriticalPathEvaluator {
                                 byte[] decodedCriticalPathBytes = Base64.getDecoder().decode(encodedCriticalPathString);
                                 String decodedCriticalPathString = new String(decodedCriticalPathBytes);
                                 // System.out.println(decodedCriticalPathString);
-                                return CriticalPathEvaluator.create(decodedElapsedTimeString, decodedCriticalPathString);
+                                return new CriticalPathEvaluator(Float.parseFloat(decodedElapsedTimeString), decodedCriticalPathString);
                             } else {
                                 jsonReader.skipValue();
                             }
@@ -91,7 +83,7 @@ public class CriticalPathEvaluator {
                 jsonReader.skipValue();
             }
         }   
-        return CriticalPathEvaluator.create("", "");
+        return new CriticalPathEvaluator(0.0f, "");
     }
 
     public int totalSteps() {

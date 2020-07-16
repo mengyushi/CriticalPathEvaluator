@@ -26,17 +26,6 @@ public class CriticalPathEvent {
         remote_time = remote_t;
     }
 
-    public static CriticalPathEvent create(
-        String act,
-        boolean remote,
-        Duration total_t,
-        String remote_m,
-        Duration remote_t) {
-
-        return new CriticalPathEvent(act, remote, total_t, remote_m, remote_t);
-
-    }
-
     public static CriticalPathEvent createFromString(String str) {
         boolean remote = false;
         Float t = 0.0f;
@@ -65,7 +54,7 @@ public class CriticalPathEvent {
         Duration total_t = Duration.ofNanos((long)(t*1000000000));
         Duration remote_t = Duration.ofNanos((long)(t*pct*10000000));
 
-        return create(act, remote, total_t, remote_metrics, remote_t);
+        return new CriticalPathEvent(act, remote, total_t, remote_metrics, remote_t);
     }
 
     public static List<CriticalPathEvent> getCriticalEvents(String str) {
