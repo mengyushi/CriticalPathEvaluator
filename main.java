@@ -36,7 +36,6 @@ public class main {
         System.out.println("\n==== QUERY =====\n");
 
         while (true) {
-
             System.out.println("1: Query Remote Metrics Summary");
             System.out.println("2: Query Detail of Single Event");
             input = user.nextLine().trim();

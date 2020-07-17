@@ -23,7 +23,6 @@ public class CriticalPathEvaluator {
         elapsedTime = time;
         criticalPathString = criticalPath;
         criticalPathEvents = CriticalPathEvent.getCriticalEvents(criticalPath);
-
         Matcher remoteTimeMatcher = Pattern.compile(".* ([\\d\\.\\d]*)s, Remote \\((.*)% of the time\\).*\\[(.*)\\]").matcher(criticalPath.split("\n")[0]);
         if(remoteTimeMatcher.matches()){
             criticalPathTime = Float.parseFloat(remoteTimeMatcher.group(1));
@@ -37,21 +36,15 @@ public class CriticalPathEvaluator {
     public static CriticalPathEvaluator createFromJsonReader(JsonReader jsonReader) throws IOException {
         JsonToken nextToken = jsonReader.peek();
         jsonReader.beginObject(); // "BEGIN_OBJECT"
-
         while(jsonReader.hasNext()) {
             String name = jsonReader.nextName();
             if (name.equals("buildToolLogs")) {
                 jsonReader.beginObject();
-
                 while(jsonReader.hasNext()) {
                     name = jsonReader.nextName();
                     if(name.equals("log")) {
                         jsonReader.beginArray();
-
-                        // now in log array
-
                         String decodedElapsedTimeString = "";
-
                         jsonReader.beginObject();
                         while(jsonReader.hasNext()) {
                             name = jsonReader.nextName();
@@ -64,11 +57,8 @@ public class CriticalPathEvaluator {
                                 jsonReader.skipValue();
                             }
                         }
-
                         jsonReader.endObject();
-
                         jsonReader.beginObject();
-
                         while(jsonReader.hasNext()) {
                             name = jsonReader.nextName();
                             if(name.equals("contents")) {
@@ -81,13 +71,10 @@ public class CriticalPathEvaluator {
                                 jsonReader.skipValue();
                             }
                         }
-
                     } else {
                         jsonReader.skipValue();
                     }
                 }
-
-                
             } else {
                 jsonReader.skipValue();
             }
@@ -146,7 +133,6 @@ public class CriticalPathEvaluator {
         System.out.println();        
     }
 
-    
     public void printRemoteTimePercentage(String key){
         Set<String> keys = Set.of("parse", "queue", "network", "upload", "setup", "process", "fetch", "retry", "processOutputs", "other");
         if (keys.contains(key)) {

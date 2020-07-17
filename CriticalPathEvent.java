@@ -33,7 +33,6 @@ public class CriticalPathEvent {
         String act = "";
         float pct = 0.0f;
         String remoteMetricsString = "";
-
         Matcher remoteTimeMatcher = Pattern.compile(".* ([\\d\\.\\d]*)s, Remote \\((.*)% of the time\\).*\\[(.*)\\] (.*)").matcher(str);
         
         if (remoteTimeMatcher.matches()) {
@@ -52,7 +51,6 @@ public class CriticalPathEvent {
                 System.err.println("Pattern Matching Error");
             }
         }
-
         return new CriticalPathEvent(act, remote, total, remoteMetricsString, total*pct/100);
     }
 

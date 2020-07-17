@@ -16,7 +16,6 @@ public class RemoteMetrics {
         for (int i = 0; i < 10; i++) {
             remoteMetrics.add(times.get(i));
         }
-
         index = new HashMap<String, Integer>();
         index.put("total", 0);
         index.put("parse", 1);
@@ -29,7 +28,6 @@ public class RemoteMetrics {
         index.put("retry", 8);
         index.put("processOutputs", 9);
         index.put("other", 10);
-
         summary = str;
     }
 
@@ -40,7 +38,6 @@ public class RemoteMetrics {
         for (String key:keys) {
             pattern += key + ": ([\\d\\.\\d]*)%.*";
         }
-
         Matcher remoteTimeMatcher = Pattern.compile(pattern).matcher(str);
         if(remoteTimeMatcher.matches()){
             for (int i = 0; i < keys.length; i++){
