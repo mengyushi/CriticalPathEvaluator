@@ -29,7 +29,7 @@ QUERY:
 
 Usage:
 
-  - Keyboard input for json file
+  - Keyboard input for json filename
   - Choose Query type [1/2]
     - 1: Query Remote Metrics Summary
       Keyboard input target key metric [parse/queue/network/upload/setup/process/fetch/retry/processOutputs/other]
