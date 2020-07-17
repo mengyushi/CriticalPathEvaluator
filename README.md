@@ -16,14 +16,19 @@ QUERY:
   Basic interaction for more details.
   
   1: Query Remote Metrics Summary
-    Show total wall time, percentage of critical path time, and percentage of elapsed time for given key metric.
-    Choose from: parse/queue/network/upload/setup/process/fetch/retry/processOutputs/other
+  
+  Show total wall time, percentage of critical path time, and percentage of elapsed time for given key metric.
+  
+  Choose from: parse/queue/network/upload/setup/process/fetch/retry/processOutputs/other
     
   2: Query Detail of Single Event
-    Show details of critical path event by given index (use index shown in ALL STEPS).
-    Including action, remote/not remote, wall time, time percentage of critical path time, time percentage of elapsed time, and remote breakdown in percentage of wall time if this event is remote.  
+  
+  Show details of critical path event by given index (use index shown in ALL STEPS).
+  
+  Including action, remote/not remote, wall time, time percentage of critical path time, time percentage of elapsed time, and remote breakdown in percentage of wall time if this event is remote.  
 
 Usage:
+
   - Keyboard input for json file
   - Choose Query type [1/2]
     - 1: Query Remote Metrics Summary
