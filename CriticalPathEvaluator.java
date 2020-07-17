@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Base64;
 import java.io.*;
 
@@ -115,19 +116,46 @@ public class CriticalPathEvaluator {
         return this.remoteTotalTime;
     }
 
-    public float parseTotalTime() {
-        float parseTime = 0.0f;
-        for (CriticalPathEvent event:this.criticalPathEvents) {
-            if (event.isRemote()) {
-                parseTime += event.remoteMetrics().parseTime();
-            }
-        }
-        return parseTime;
+    public float getRemoteTimeWithKey(String key) {
+        return this.remoteMetrics.getTime(key);
     }
 
-    public float parseTimePercentage() {
-        float parseTime = this.parseTotalTime();
-        return parseTime / this.elapsedTime;
+    public void printAllSteps() {
+        int index = 1;
+        for (CriticalPathEvent event:this.criticalPathEvents) {
+            System.out.println("[" + Integer.toString(index) + "] " + Float.toString(event.totalTime()) + "s " + event.action());
+            index++;
+        }
     }
-        
+
+    public void printEventDetails(int idx) {
+        if (idx >= 1 && idx <= this.criticalPathEvents.size()) {
+            CriticalPathEvent event = this.criticalPathEvents.get(idx-1);
+            System.out.println(event.action());
+            System.out.println("Is Remote: " + Boolean.toString(event.isRemote()));
+            System.out.println("Wall Time: " + Float.toString(event.totalTime()) + "s");
+            System.out.println("Wall Time / Critical Path Time: " + Float.toString(event.totalTime() * 100 / this.criticalPathTime) + "%");
+            System.out.println("Wall Time / Elapse Time: " + Float.toString(event.totalTime() * 100 / this.elapsedTime) + "%");
+            if (event.isRemote()) {
+                System.out.println("Remote Breakdown (Percentage of Wall Time): ");
+                event.remoteMetrics().printSummary();
+            }
+        } else {
+            System.out.println("Event not found.");
+        }
+        System.out.println();        
+    }
+
+    
+    public void printRemoteTimePercentage(String key){
+        Set<String> keys = Set.of("parse", "queue", "network", "upload", "setup", "process", "fetch", "retry", "processOutputs", "other");
+        if (keys.contains(key)) {
+            Float time = this.remoteMetrics.getTime(key);
+            System.out.println("Wall Time: " + Float.toString(time) + "s ");
+            System.out.println(time * 100 / this.criticalPathTime + "% of Critical Path Time");
+            System.out.println(time * 100 / this.elapsedTime + "% of Elapsed Time");
+        } else {
+            System.out.println("Required key not exists. Use: parse/queue/network/upload/setup/process/fetch/retry/processOutputs/other");
+        }
+    }
 } 

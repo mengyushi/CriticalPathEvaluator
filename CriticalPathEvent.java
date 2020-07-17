@@ -21,6 +21,7 @@ public class CriticalPathEvent {
         isRemote = rm;
         action = act;
         totalTime = total;
+        remoteTime = remote;
         if (isRemote) {
             remoteMetrics = RemoteMetrics.createFromString(totalTime, metrics);
         }
@@ -64,6 +65,10 @@ public class CriticalPathEvent {
         return events;
     }
 
+    public String action() {
+        return this.action;
+    }
+
     public boolean isRemote() {
         return this.isRemote;
     }
@@ -75,15 +80,4 @@ public class CriticalPathEvent {
     public RemoteMetrics remoteMetrics() {
         return this.remoteMetrics;
     }
-
-    public void print() {
-        System.out.println("ACTION:");
-        System.out.println(this.action);
-        System.out.println("Is Remote?");
-        System.out.println(this.isRemote);
-        System.out.println("Total Time:");
-        System.out.println(this.totalTime);
-        System.out.println();
-    }
-      
 }
